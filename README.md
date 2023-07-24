@@ -20,6 +20,15 @@ require'cmp'.setup {
   }
 }
 ```
+## Scss file layout
+
+When scanning the option.folders directories for scss variables it expects to find lines like these in the files it searches in. It will skip all other lines.
+
+```bash
+  $dnr-color-neutrals-50: #ffffff;
+```
+
+The line is accepted as a match when it starts with '\$', some variable name, followed by a colon (:), then the value the variable has and ends with a ';'
 
 ## Configuration
 
