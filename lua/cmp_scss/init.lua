@@ -1,5 +1,6 @@
 local source = {}
 local options
+local items = require("cmp_scss.items")
 
 source.new = function()
 	local self = setmetatable({}, { __index = source })
@@ -8,8 +9,8 @@ source.new = function()
 	return self
 end
 
-source.get_trigger_characters = function()
-	return { "$" }
+source.get_trigger_characters = function(self, params)
+	return self:option(params).triggers
 end
 
 source.get_keyword_pattern = function(self, params)
@@ -22,12 +23,12 @@ source.complete = function(self, params, callback)
 			self.insert_items = vim.tbl_map(function(item)
 				item.word = nil
 				return item
-			end, require("cmp_scss.items")(self, params))
+			end, items(self, params))
 		end
 		callback(self.insert_items)
 	else
 		if not self.commit_items then
-			self.commit_items = require("cmp_scss.items")(self, params)
+			self.commit_items = items(self, params)
 		end
 		callback(self.commit_items)
 	end
@@ -35,7 +36,10 @@ end
 source.option = function(_, params)
 	options = vim.tbl_extend("force", {
 		insert = false,
+		triggers = { "$" },
 		pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=],
+		extension = ".scss",
+		folders = { "node_modules/@dnr-ui/tokens/scss" },
 	}, params.option)
 	return options
 end
