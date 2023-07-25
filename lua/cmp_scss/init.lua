@@ -39,7 +39,7 @@ source.option = function(_, params)
 		triggers = { "$" },
 		pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=],
 		extension = ".scss",
-		folders = { "node_modules/@dnr-ui/tokens/scss" },
+		folders = {},
 	}, params.option)
 	return options
 end
